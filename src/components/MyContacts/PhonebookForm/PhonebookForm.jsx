@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import css from './phonebook-form.module.css';
 
@@ -13,62 +13,121 @@ const INITIAL_STATE = {
   number: '',
 };
 
-class PhonebookForm extends Component {
-  state = {
-    ...INITIAL_STATE,
-  };
+const PhonebookForm = ({ onSubmit }) => {
+  const [state, setState] = useState({ ...INITIAL_STATE });
 
-  HandleChange = ({ target }) => {
+  const HandleChange = ({ target }) => {
     const { name, value } = target;
-    this.setState({
+
+    setState({
+      ...state,
       [name]: value,
     });
   };
 
-  HandleSubmit = e => {
+  const HandleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit({ ...this.state });
-    // const { elements } = e.currentTarget;
-    this.setState({ ...INITIAL_STATE });
-    console.log(this.state);
+    onSubmit({ ...state });
+    reset();
   };
 
-  contactNameId = nanoid();
-  render() {
-    const { contactNameId, numberId, HandleSubmit, HandleChange } = this;
-    const { name, number } = this.state;
-    return (
-      <div className={css.wrapper}>
-        <form onSubmit={HandleSubmit} className={css.form}>
-          <div className={css.formGroup}>
-            <label htmlFor={contactNameId}>Name</label>
-            <input
-              value={name}
-              onChange={HandleChange}
-              id={contactNameId}
-              type="text"
-              name="name"
-              required
-              placeholder="Contact name"
-            />
-            <label htmlFor={numberId}>Number</label>
-            <input
-              value={number}
-              onChange={HandleChange}
-              id={numberId}
-              type="tel"
-              name="number"
-              required
-              placeholder="Number"
-            />
-          </div>
-          <button className={css.button} type="submit">
-            Add contact
-          </button>
-        </form>
-      </div>
-    );
-  }
-}
+  const reset = () => {
+    setState({ ...INITIAL_STATE });
+  };
+
+  const contactNameId = nanoid();
+  const numberId = nanoid();
+
+  const { name, number } = state;
+  return (
+    <div className={css.wrapper}>
+      <form onSubmit={HandleSubmit} className={css.form}>
+        <div className={css.formGroup}>
+          <label htmlFor={contactNameId}>Name</label>
+          <input
+            value={name}
+            onChange={HandleChange}
+            id={contactNameId}
+            type="text"
+            name="name"
+            required
+            placeholder="Contact name"
+          />
+          <label htmlFor={numberId}>Number</label>
+          <input
+            value={number}
+            onChange={HandleChange}
+            id={numberId}
+            type="tel"
+            name="number"
+            required
+            placeholder="Number"
+          />
+        </div>
+        <button className={css.button} type="submit">
+          Add contact
+        </button>
+      </form>
+    </div>
+  );
+};
+
+// class PhonebookForm extends Component {
+//   state = {
+//     ...INITIAL_STATE,
+//   };
+
+//   HandleChange = ({ target }) => {
+//     const { name, value } = target;
+//     this.setState({
+//       [name]: value,
+//     });
+//   };
+
+//   HandleSubmit = e => {
+//     e.preventDefault();
+//     this.props.onSubmit({ ...this.state });
+//     // const { elements } = e.currentTarget;
+//     this.setState({ ...INITIAL_STATE });
+//     console.log(this.state);
+//   };
+
+//   contactNameId = nanoid();
+//   render() {
+//     const { contactNameId, numberId, HandleSubmit, HandleChange } = this;
+//     const { name, number } = this.state;
+//     return (
+//       <div className={css.wrapper}>
+//         <form onSubmit={HandleSubmit} className={css.form}>
+//           <div className={css.formGroup}>
+//             <label htmlFor={contactNameId}>Name</label>
+//             <input
+//               value={name}
+//               onChange={HandleChange}
+//               id={contactNameId}
+//               type="text"
+//               name="name"
+//               required
+//               placeholder="Contact name"
+//             />
+//             <label htmlFor={numberId}>Number</label>
+//             <input
+//               value={number}
+//               onChange={HandleChange}
+//               id={numberId}
+//               type="tel"
+//               name="number"
+//               required
+//               placeholder="Number"
+//             />
+//           </div>
+//           <button className={css.button} type="submit">
+//             Add contact
+//           </button>
+//         </form>
+//       </div>
+//     );
+//   }
+// }
 
 export default PhonebookForm;
