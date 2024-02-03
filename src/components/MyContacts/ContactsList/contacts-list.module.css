@@ -1,0 +1,28 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  background-color: #f0dcdc;
+  border-radius: 15px;
+  box-shadow: 2px 2px 7px grey;
+  width: 300px;
+  border: 1px solid;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.item {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.number {
+  margin-right: 20px;
+  margin-left: auto;
+  text-align: end;
+}
+
+.button {
+  /* dsad */
+}
