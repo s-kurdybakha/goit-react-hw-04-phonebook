@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PhonebookForm from 'components/MyContacts/PhonebookForm/PhonebookForm';
 import ContactsList from 'components/MyContacts/ContactsList/ContactsList';
 import css from './my-contacts.module.css';
@@ -6,8 +6,15 @@ import css from './my-contacts.module.css';
 import { nanoid } from 'nanoid';
 
 const MyContacts = () => {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(() => {
+    const data = JSON.parse(localStorage.getItem('my-contacts'));
+    return data || [];
+  });
   const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem('my-contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const isDublacate = ({ name, number }) => {
     const normalazedName = name.toLowerCase();
